@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -481,20 +480,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &330585548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d0bb152d24a9324e95a80ede5a07193, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CubeInteractionHandler
-  _cubeFactory: {fileID: 1706049149}
-  _cubeExplosion: {fileID: 1968465535}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,16 +1196,16 @@ MonoBehaviour:
   OnCubeHit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 3d0bb152d24a9324e95a80ede5a07193, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: set_name
-        m_Mode: 5
+      - m_Target: {fileID: 1961961936}
+        m_TargetAssemblyTypeName: CubeInteractionHandler, Assembly-CSharp
+        m_MethodName: HandleCubeClick
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: HandleCubeClick
+          m_StringArgument: HandleCubeClick(GameObject clickedCube, Vector3 hitPoint)
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1961961938
@@ -1238,16 +1223,16 @@ MonoBehaviour:
   OnLeftMouseButtonPressed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 3e9aafcc12e578f41b7e9fe24e857ff2, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1961961937}
+        m_TargetAssemblyTypeName: CubeRaycaster, Assembly-CSharp
+        m_MethodName: HandleMouseClick
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: HandleMouseClick
+          m_StringArgument: HandleMouseClick(Vector2 mousePosition)
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1968465534
@@ -1279,8 +1264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e930b93a20c2f4d94f36d4ee06af0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeExplosion
-  _explosionForce: 100
-  _explosionRadius: 100
+  _explosionForce: 50
+  _explosionRadius: 30
   _upwardsModifier: 0
   _effect: {fileID: 4914716930404006884, guid: aed12c224fbc8704d8eaa07a52e88f44, type: 3}
   _effectDuration: 4

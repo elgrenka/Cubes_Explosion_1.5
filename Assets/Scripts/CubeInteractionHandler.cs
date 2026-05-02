@@ -36,27 +36,7 @@ public class CubeInteractionHandler : MonoBehaviour
 
     private void ApplyExplosionToSpawnedCubes(List<GameObject> spawnedCubes, Vector3 explosionCenter)
     {
-        foreach (GameObject cube in spawnedCubes)
-        {
-            if (cube.TryGetComponent<Rigidbody>(out var rb))
-            {
-                Vector3 direction = (cube.transform.position - explosionCenter).normalized;
-                float distance = Vector3.Distance(cube.transform.position, explosionCenter);
-
-                float forceMultiplier = Mathf.Clamp01(1f - distance / 5f);
-                rb.AddForce(direction * 500f * forceMultiplier, ForceMode.Impulse);
-            }
-        }
-
-        PlayExplosionEffect(explosionCenter);
-    }
-
-    private void PlayExplosionEffect(Vector3 position)
-    {
-        if (_cubeExplosion != null)
-        {
-            _cubeExplosion.PlayExplosionEffect(position);
-        }
+        _cubeExplosion.ApplyExplosionToObjects(spawnedCubes, explosionCenter);
     }
 
     private bool CalculateSplitChance(int generation)
