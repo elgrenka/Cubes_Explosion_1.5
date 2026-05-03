@@ -1,13 +1,16 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Renderer))]
 
 public class Cube : MonoBehaviour
 {
-    [field: SerializeField] public int Generation { get; set; }
-
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Renderer _renderer;
+
+    [field: SerializeField] public int Generation { get; private set; }
 
     private void Awake()
     {
@@ -16,6 +19,11 @@ public class Cube : MonoBehaviour
 
         if (_renderer == null)
             _renderer = GetComponent<Renderer>();
+    }
+
+    public void Initialize(int generation)
+    {
+        Generation = generation;
     }
 
     public void SetScale(Vector3 scale)
@@ -34,13 +42,20 @@ public class Cube : MonoBehaviour
         };
     }
 
-    public void EnablePhysics(Vector3 initialForce)
+    public void EnableGravity()
     {
         if (_rigidbody == null)
             return;
 
         _rigidbody.useGravity = true;
-        _rigidbody.AddForce(initialForce, ForceMode.Impulse);
+    }
+
+    public void AddInitialForce(Vector3 force)
+    {
+        if (_rigidbody == null)
+            return;
+
+        _rigidbody.AddForce(force, ForceMode.Impulse);
     }
 
     public void ApplyExplosionForce(float force, Vector3 center, float radius, float upwardsModifier)
