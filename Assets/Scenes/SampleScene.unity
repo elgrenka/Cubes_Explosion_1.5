@@ -480,6 +480,24 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &362587705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1710533078880315228, guid: 78754eede7baa0f46b14a8082a85f118, type: 3}
+  m_PrefabInstance: {fileID: 2057776165}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &362587711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362587705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c8f73c64060ac4a970a43910e47feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeData
+  _generation: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,8 +1097,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1710533078880315228, guid: 78754eede7baa0f46b14a8082a85f118, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1689622876}
   m_SourcePrefab: {fileID: 100100000, guid: 78754eede7baa0f46b14a8082a85f118, type: 3}
+--- !u!1 &1689622870 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1710533078880315228, guid: 78754eede7baa0f46b14a8082a85f118, type: 3}
+  m_PrefabInstance: {fileID: 1194677865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1689622876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689622870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c8f73c64060ac4a970a43910e47feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeData
+  _generation: 0
 --- !u!1 &1706049148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,21 +1232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeRaycaster
   _terrainLayer: 10
   _mainCamera: {fileID: 330585545}
-  OnCubeHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1961961936}
-        m_TargetAssemblyTypeName: CubeInteractionHandler, Assembly-CSharp
-        m_MethodName: HandleCubeClick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HandleCubeClick(GameObject clickedCube, Vector3 hitPoint)
-          m_BoolArgument: 0
-        m_CallState: 2
+  _inputReader: {fileID: 0}
 --- !u!114 &1961961938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,21 +1245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1918a106ad4897646be886558aed3a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputReader
-  OnLeftMouseButtonPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1961961937}
-        m_TargetAssemblyTypeName: CubeRaycaster, Assembly-CSharp
-        m_MethodName: HandleMouseClick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HandleMouseClick(Vector2 mousePosition)
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1968465534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,7 +1365,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1710533078880315228, guid: 78754eede7baa0f46b14a8082a85f118, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 362587711}
   m_SourcePrefab: {fileID: 100100000, guid: 78754eede7baa0f46b14a8082a85f118, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

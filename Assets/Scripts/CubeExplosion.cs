@@ -16,12 +16,18 @@ public class CubeExplosion : MonoBehaviour
 
         foreach (GameObject obj in targetObjects)
         {
-            if (obj == null) continue;
+            if (obj == null)
+                continue;
+
             Rigidbody rb = obj.GetComponent<Rigidbody>();
-            if (rb == null) continue;
+
+            if (rb == null)
+                continue;
 
             float distance = Vector3.Distance(obj.transform.position, explosionCenter);
-            if (distance > _explosionRadius) continue;
+
+            if (distance > _explosionRadius)
+                continue;
 
             rb.AddExplosionForce(_explosionForce, explosionCenter, _explosionRadius,
                                  _upwardsModifier, ForceMode.Impulse);
@@ -30,8 +36,11 @@ public class CubeExplosion : MonoBehaviour
 
     private void PlayExplosionEffect(Vector3 position)
     {
-        if (_effect == null) return;
+        if (_effect == null)
+            return;
+
         GameObject explosion = Instantiate(_effect, position, Quaternion.identity);
+
         Destroy(explosion, _effectDuration);
     }
 }

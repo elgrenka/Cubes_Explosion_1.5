@@ -6,8 +6,35 @@ public class CubeInteractionHandler : MonoBehaviour
     [SerializeField] private CubeFactory _cubeFactory;
     [SerializeField] private CubeExplosion _cubeExplosion;
 
+    private void Awake()
+    {
+        Debug.Log("CubeInteractionHandler.Awake()");
+
+        var raycaster = FindAnyObjectByType<CubeRaycaster>();
+
+        if (raycaster == null)
+        {
+            Debug.LogError("CubeInteractionHandler: CubeRaycaster не найден!");
+        }
+        else
+        {
+            Debug.Log("CubeInteractionHandler: подписываемся на OnCubeHit");
+            raycaster.OnCubeHit += HandleCubeClick;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        var raycaster = FindAnyObjectByType<CubeRaycaster>();
+
+        if (raycaster != null)
+            raycaster.OnCubeHit -= HandleCubeClick;
+    }
+
     public void HandleCubeClick(GameObject clickedCube, Vector3 hitPoint)
     {
+        Debug.Log("HandleCubeClick ВЫЗВАН для куба: " + clickedCube.name);
+
         CubeData cubeData = clickedCube.GetComponent<CubeData>();
         int generation = cubeData?.Generation ?? 0;
 
