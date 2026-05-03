@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
-//using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class CubeRaycaster : MonoBehaviour
 {
     [SerializeField] private int _terrainLayer = 10;
-    [SerializeField] private Camera _mainCamera;
-    [SerializeField] private InputReader _inputReader;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private InputReader _input;
 
-    public event System.Action<GameObject, Vector3> OnCubeHit;
+    public event System.Action<Cube, Vector3> OnCubeHit;
 
     //[System.Serializable]
     //public class CubeHitEvent : UnityEvent<GameObject, Vector3> { }
@@ -18,46 +17,45 @@ public class CubeRaycaster : MonoBehaviour
     {
         Debug.Log("CubeRaycaster.Awake()");
 
-        if (_mainCamera == null)
-            _mainCamera = Camera.main;
+        if (_camera == null)
+            _camera = Camera.main;
 
-        if (_inputReader == null)
-            _inputReader = FindAnyObjectByType<InputReader>();
+        if (_input == null)
+            _input = FindAnyObjectByType<InputReader>();
 
-        if (_inputReader == null)
+        if (_input != null)
         {
-            Debug.LogError("CubeRaycaster: InputReader не найден на сцене!");
-            return;
+            _input.OnClick += HandleClick;
         }
-        else
-        {
-            Debug.Log("CubeRaycaster: InputReader найден, подписываемся");
-            _inputReader.OnLeftMouseButtonPressed += HandleMouseClick;
-        }
+        //else
+        //{
+        //    Debug.Log("CubeRaycaster: InputReader найден, подписываемся");
+        //    _input.OnLeftMouseButtonPressed += HandleMouseClick;
+        //}
 
         //_inputReader.OnLeftMouseButtonPressed += HandleMouseClick;
     }
 
     private void OnDestroy()
     {
-        if (_inputReader != null)
-            _inputReader.OnLeftMouseButtonPressed -= HandleMouseClick;
+        if (_input != null)
+            _input.OnClick -= HandleClick;
     }
 
 
-    private void HandleMouseClick(Vector2 mousePosition)
+    private void HandleClick(Vector2 screenPosition)
     {
-        Debug.Log("CubeRaycaster.HandleMouseClick вызван, позиция: " + mousePosition);
+        //Debug.Log("CubeRaycaster.HandleMouseClick вызван, позиция: " + screenPosition);
 
 
-        if (_mainCamera == null)
-        {
-            Debug.LogError("CubeRaycaster: камера не назначена и Camera.main не найдена. " +
-                "Луч не может быть построен.");
-            return;
-        }
+        //if (_camera == null)
+        //{
+        //    Debug.LogError("CubeRaycaster: камера не назначена и Camera.main не найдена. " +
+        //        "Луч не может быть построен.");
+        //    return;
+        //}
 
-        Ray ray = _mainCamera.ScreenPointToRay(mousePosition);
+        Ray ray = _camera.ScreenPointToRay(screenPosition);
 
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
 
@@ -68,21 +66,28 @@ public class CubeRaycaster : MonoBehaviour
             return;
         }
 
-        GameObject clickedObject = hit.collider.gameObject;
-
-        if (IsTerrain(clickedObject))
+        if (hit.collider.gameObject.layer == _terrainLayer)
             return;
 
-        if (clickedObject.TryGetComponent<CubeData>(out _) == false)
-            return;
+        if (hit.collider.TryGetComponent(out Cube cube))
+        {
+            OnCubeHit?.Invoke(cube, hit.point);
+        }
 
-        OnCubeHit?.Invoke(clickedObject, hit.point);
+        //GameObject clickedObject = hit.collider.gameObject;
+
+        //if (IsTerrain(clickedObject))
+        //    return;
+
+        //if (clickedObject.TryGetComponent<CubeData>(out _) == false)
+        //    return;
+
 
         Debug.Log("OnCubeHit вызван, подписчиков: " + (OnCubeHit != null ? "есть" : "нет"));
     }
 
-    private bool IsTerrain(GameObject targetObject)
-    {
-        return targetObject.layer == _terrainLayer;
-    }
+    //private bool IsTerrain(GameObject targetObject)
+    //{
+    //    return targetObject.layer == _terrainLayer;
+    //}
 }

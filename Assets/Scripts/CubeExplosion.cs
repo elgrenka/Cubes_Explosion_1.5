@@ -10,37 +10,36 @@ public class CubeExplosion : MonoBehaviour
     [SerializeField] private GameObject _effect;
     [SerializeField] private float _effectDuration = 4f;
 
-    public void ApplyExplosionToObjects(List<GameObject> targetObjects, Vector3 explosionCenter)
+    public void ApplyExplosion(List<Cube> cubes, Vector3 center)
     {
-        PlayExplosionEffect(explosionCenter);
+        PlayEffect(center);
 
-        foreach (GameObject obj in targetObjects)
+        foreach (Cube cube in cubes)
         {
-            if (obj == null)
+            if (cube == null)
                 continue;
 
-            Rigidbody rb = obj.GetComponent<Rigidbody>();
+            //Rigidbody rb = cube.GetComponent<Rigidbody>();
 
-            if (rb == null)
-                continue;
+            //if (rb == null)
+            //    continue;
 
-            float distance = Vector3.Distance(obj.transform.position, explosionCenter);
+            //float distance = Vector3.Distance(cube.transform.position, center);
 
-            if (distance > _explosionRadius)
-                continue;
+            //if (distance > _explosionRadius)
+            //    continue;
 
-            rb.AddExplosionForce(_explosionForce, explosionCenter, _explosionRadius,
-                                 _upwardsModifier, ForceMode.Impulse);
+            cube.ApplyExplosionForce(_explosionForce, center, _explosionRadius, _upwardsModifier);
         }
     }
 
-    private void PlayExplosionEffect(Vector3 position)
+    private void PlayEffect(Vector3 position)
     {
         if (_effect == null)
             return;
 
-        GameObject explosion = Instantiate(_effect, position, Quaternion.identity);
+        GameObject effect = Instantiate(_effect, position, Quaternion.identity);
 
-        Destroy(explosion, _effectDuration);
+        Destroy(effect, _effectDuration);
     }
 }

@@ -4,66 +4,69 @@ using UnityEngine;
 public class CubeFactory : MonoBehaviour
 {
     [Header("Настройки появления")]
-    [SerializeField] private GameObject _cubePrefab;
+    [SerializeField] private Cube _cubePrefab;
     [SerializeField] private int _minSpawnCount = 2;
     [SerializeField] private int _maxSpawnCount = 6;
     [SerializeField] private float _spawnRadius = 3f;
     [SerializeField] private float _initialForce = 5f;
-    [SerializeField] private ParticleSystem _effect;
+    //[SerializeField] private ParticleSystem _effect;
 
-    public List<GameObject> SpawnSplitCubes(Vector3 position, Vector3 scale, int generation)
+    public List<Cube> SpawnSplitCubes(Vector3 position, Vector3 scale, int generation)
     {
-        int spawnCount = Random.Range(_minSpawnCount, _maxSpawnCount + 1);
-        List<GameObject> spawnedCubes = new List<GameObject>();
+        int count = Random.Range(_minSpawnCount, _maxSpawnCount + 1);
+        List<Cube> cubes = new List<Cube>();
 
-        for (int i = 0; i < spawnCount; i++)
+        for (int i = 0; i < count; i++)
         {
-            GameObject cube = CreateCube(position, scale, generation);
-            spawnedCubes.Add(cube);
+            cubes.Add(CreateCube(position, scale, generation));
         }
 
-        return spawnedCubes;
+        return cubes;
     }
 
-    private GameObject CreateCube(Vector3 basePosition, Vector3 scale, int generation)
+    private Cube CreateCube(Vector3 basePosition, Vector3 scale, int generation)
     {
-        Vector3 spawnOffset = Random.insideUnitSphere * _spawnRadius;
-        Vector3 spawnPosition = basePosition + spawnOffset;
+        Vector3 offset = Random.insideUnitSphere * _spawnRadius;
+        Vector3 spawnPosition = basePosition + offset;
 
-        GameObject cube = Instantiate(_cubePrefab, spawnPosition, Quaternion.identity);
-        cube.transform.localScale = scale;
+        Cube cube = Instantiate(_cubePrefab, spawnPosition, Quaternion.identity);
 
-        SetupCubeData(cube, generation);
-        SetupCubePhysics(cube);
-        SetupCubeVisuals(cube);
+        cube.SetScale(scale);
+        cube.Generation = generation;
+        cube.SetRandomColor();
+        cube.EnablePhysics(Random.insideUnitSphere * _initialForce);
+
+        //SetupCubeData(cube, generation);
+        //SetupCubePhysics(cube);
+        //SetupCubeVisuals(cube);
 
         return cube;
     }
 
-    private void SetupCubeData(GameObject cube, int generation)
-    {
-        CubeData cubeData = cube.GetComponent<CubeData>() ?? cube.AddComponent<CubeData>();
-        cubeData.Generation = generation;
-    }
+    //private void SetupCubeData(GameObject cube, int generation)
+    //{
+    //    CubeData cubeData = cube.GetComponent<CubeData>() ?? cube.AddComponent<CubeData>();
+    //    cubeData.Generation = generation;
+    //}
 
-    private void SetupCubePhysics(GameObject cube)
-    {
-        Rigidbody cubeRigidbody = cube.GetComponent<Rigidbody>() ?? cube.AddComponent<Rigidbody>();
-        cubeRigidbody.AddForce(Random.insideUnitSphere * _initialForce, ForceMode.Impulse);
+    //private void SetupCubePhysics(GameObject cube)
+    //{
+    //    Rigidbody cubeRigidbody = cube.GetComponent<Rigidbody>() ?? cube.AddComponent<Rigidbody>();
+    //    cubeRigidbody.AddForce(Random.insideUnitSphere * _initialForce, ForceMode.Impulse);
 
-        cubeRigidbody.useGravity = true;
-    }
+    //    cubeRigidbody.useGravity = true;
+    //}
 
-    private void SetupCubeVisuals(GameObject cube)
-    {
-        Renderer cubeRenderer = cube.GetComponent<Renderer>();
+    //private void SetupCubeVisuals(GameObject cube)
+    //{
+    //    Renderer cubeRenderer = cube.GetComponent<Renderer>();
 
-        if (cubeRenderer is null)
-            return;
+    //    if (cubeRenderer is null)
+    //        return;
 
-        cubeRenderer.material = new Material(cubeRenderer.material)
-        {
-            color = Random.ColorHSV()
-        };
-    }
+    //    cubeRenderer.material = new Material(cubeRenderer.material)
+    //    {
+    //        color = Random.ColorHSV()
+    //    };
+    //}
 }

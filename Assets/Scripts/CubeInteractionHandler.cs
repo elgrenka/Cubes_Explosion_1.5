@@ -3,72 +3,68 @@ using UnityEngine;
 
 public class CubeInteractionHandler : MonoBehaviour
 {
-    [SerializeField] private CubeFactory _cubeFactory;
-    [SerializeField] private CubeExplosion _cubeExplosion;
+    [SerializeField] private CubeFactory _factory;
+    [SerializeField] private CubeExplosion _explosion;
 
     private void Awake()
     {
-        Debug.Log("CubeInteractionHandler.Awake()");
+        CubeRaycaster raycaster = FindAnyObjectByType<CubeRaycaster>();
 
-        var raycaster = FindAnyObjectByType<CubeRaycaster>();
-
-        if (raycaster == null)
-        {
-            Debug.LogError("CubeInteractionHandler: CubeRaycaster не найден!");
-        }
+        if (raycaster != null)
+            raycaster.OnCubeHit += HandleClick;
         else
-        {
-            Debug.Log("CubeInteractionHandler: подписываемся на OnCubeHit");
-            raycaster.OnCubeHit += HandleCubeClick;
-        }
+            Debug.LogError("CubeRaycaster не найден");
     }
 
     private void OnDestroy()
     {
-        var raycaster = FindAnyObjectByType<CubeRaycaster>();
+        CubeRaycaster raycaster = FindAnyObjectByType<CubeRaycaster>();
 
         if (raycaster != null)
-            raycaster.OnCubeHit -= HandleCubeClick;
+            raycaster.OnCubeHit -= HandleClick;
     }
 
-    public void HandleCubeClick(GameObject clickedCube, Vector3 hitPoint)
+    public void HandleClick(Cube cube, Vector3 hitPoint)
     {
-        Debug.Log("HandleCubeClick ВЫЗВАН для куба: " + clickedCube.name);
+        int generation = cube.Generation;
 
-        CubeData cubeData = clickedCube.GetComponent<CubeData>();
-        int generation = cubeData?.Generation ?? 0;
+        //Debug.Log("HandleCubeClick ВЫЗВАН для куба: " + clickedCube.name);
+        //CubeData cubeData = clickedCube.GetComponent<CubeData>();
+        //bool shouldSplit = CalculateSplitChance(generation);
 
-        bool shouldSplit = CalculateSplitChance(generation);
-
-        if (shouldSplit)
+        if (ShouldSplit(generation))
         {
-            Vector3 originalPosition = clickedCube.transform.position;
-            Vector3 originalScale = clickedCube.transform.localScale;
+            Vector3 position = cube.transform.position;
+            Vector3 scale = cube.transform.localScale * 0.5f;
 
-            List<GameObject> spawnedCubes = _cubeFactory.SpawnSplitCubes(
-                originalPosition,
-                originalScale * 0.5f,
-                generation + 1
-            );
+            List<Cube> newCubes = _factory.SpawnSplitCubes(position, scale, generation + 1);
 
-            ApplyExplosionToSpawnedCubes(spawnedCubes, originalPosition);
+            _explosion.ApplyExplosion(newCubes, position);
 
-            Destroy(clickedCube);
         }
-        else
-        {
-            Destroy(clickedCube);
-        }
+
+        Destroy(cube.gameObject);
+
+        //else
+        //{
+        //    Destroy(clickedCube);
+        //}
     }
 
-    private void ApplyExplosionToSpawnedCubes(List<GameObject> spawnedCubes, Vector3 explosionCenter)
+    private bool ShouldSplit(int generation)
     {
-        _cubeExplosion.ApplyExplosionToObjects(spawnedCubes, explosionCenter);
+        float chance = Mathf.Pow(0.5f, generation);
+        return Random.value <= chance;
     }
 
-    private bool CalculateSplitChance(int generation)
-    {
-        float splitProbability = Mathf.Pow(0.5f, generation);
-        return Random.value <= splitProbability;
-    }
+    //private void ApplyExplosionToSpawnedCubes(List<GameObject> spawnedCubes, Vector3 explosionCenter)
+    //{
+    //    _cubeExplosion.ApplyExplosionToObjects(spawnedCubes, explosionCenter);
+    //}
+
+    //private bool CalculateSplitChance(int generation)
+    //{
+    //    float splitProbability = Mathf.Pow(0.5f, generation);
+    //    return Random.value <= splitProbability;
+    //}
 }
