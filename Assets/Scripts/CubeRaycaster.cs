@@ -9,30 +9,21 @@ public class CubeRaycaster : MonoBehaviour
 
     public event Action<Cube, Vector3> OnCubeHit;
 
-    private void Awake()
-    {
-        if (_mainCamera == null)
-            _mainCamera = Camera.main;
-
-        if (_inputReader == null)
-            _inputReader = FindAnyObjectByType<InputReader>();
-    }
-
     private void OnEnable()
     {
-        if (_inputReader != null)
+        if (_inputReader is not null)
             _inputReader.OnLeftMouseButtonPressed += HandleMouseClick;
     }
 
     private void OnDisable()
     {
-        if (_inputReader != null)
+        if (_inputReader is not null)
             _inputReader.OnLeftMouseButtonPressed -= HandleMouseClick;
     }
 
     private void HandleMouseClick(Vector2 mousePosition)
     {
-        if (_mainCamera == null)
+        if (_mainCamera is null)
             return;
 
         Ray ray = _mainCamera.ScreenPointToRay(mousePosition);

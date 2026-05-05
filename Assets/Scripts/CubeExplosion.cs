@@ -19,10 +19,7 @@ public class CubeExplosion : MonoBehaviour
 
         foreach (Cube cube in cubes)
         {
-            if (cube == null)
-                continue;
-
-            cube.ApplyExplosionForce(
+            cube?.ApplyExplosionForce(
                 _explosionForce,
                 explosionCenter,
                 _explosionRadius,
@@ -33,7 +30,7 @@ public class CubeExplosion : MonoBehaviour
 
     private void PlayExplosionEffect(Vector3 position)
     {
-        if (_effect == null)
+        if (_effect is null)
             return;
 
         GameObject effect = Instantiate(_effect, position, Quaternion.identity);

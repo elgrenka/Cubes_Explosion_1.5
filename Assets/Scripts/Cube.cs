@@ -12,15 +12,6 @@ public class Cube : MonoBehaviour
 
     [field: SerializeField] public int Generation { get; private set; }
 
-    private void Awake()
-    {
-        if (_rigidbody == null)
-            _rigidbody = GetComponent<Rigidbody>();
-
-        if (_renderer == null)
-            _renderer = GetComponent<Renderer>();
-    }
-
     public void Initialize(int generation)
     {
         Generation = generation;
@@ -33,7 +24,7 @@ public class Cube : MonoBehaviour
 
     public void SetRandomColor()
     {
-        if (_renderer == null)
+        if (_renderer is null)
             return;
 
         _renderer.material = new Material(_renderer.material)
@@ -44,7 +35,7 @@ public class Cube : MonoBehaviour
 
     public void EnableGravity()
     {
-        if (_rigidbody == null)
+        if (_rigidbody is null)
             return;
 
         _rigidbody.useGravity = true;
@@ -52,17 +43,11 @@ public class Cube : MonoBehaviour
 
     public void AddInitialForce(Vector3 force)
     {
-        if (_rigidbody == null)
-            return;
-
-        _rigidbody.AddForce(force, ForceMode.Impulse);
+        _rigidbody?.AddForce(force, ForceMode.Impulse);
     }
 
     public void ApplyExplosionForce(float force, Vector3 center, float radius, float upwardsModifier)
     {
-        if (_rigidbody == null)
-            return;
-
-        _rigidbody.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
+        _rigidbody?.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
     }
 }

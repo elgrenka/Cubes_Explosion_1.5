@@ -7,33 +7,21 @@ public class CubeInteractionHandler : MonoBehaviour
     [SerializeField] private CubeExplosion _cubeExplosion;
     [SerializeField] private CubeRaycaster _cubeRaycaster;
 
-    private void Awake()
-    {
-        if (_cubeFactory == null)
-            _cubeFactory = FindAnyObjectByType<CubeFactory>();
-
-        if (_cubeExplosion == null)
-            _cubeExplosion = FindAnyObjectByType<CubeExplosion>();
-
-        if (_cubeRaycaster == null)
-            _cubeRaycaster = FindAnyObjectByType<CubeRaycaster>();
-    }
-
     private void OnEnable()
     {
-        if (_cubeRaycaster != null)
+        if (_cubeRaycaster is not null)
             _cubeRaycaster.OnCubeHit += HandleCubeClick;
     }
 
     private void OnDisable()
     {
-        if (_cubeRaycaster != null)
+        if (_cubeRaycaster is not null)
             _cubeRaycaster.OnCubeHit -= HandleCubeClick;
     }
 
     private void HandleCubeClick(Cube clickedCube, Vector3 hitPoint)
     {
-        if (clickedCube == null)
+        if (clickedCube is null)
             return;
 
         int generation = clickedCube.Generation;

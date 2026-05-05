@@ -1176,8 +1176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0bb152d24a9324e95a80ede5a07193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeInteractionHandler
-  _factory: {fileID: 1706049149}
-  _explosion: {fileID: 1968465535}
+  _cubeFactory: {fileID: 1706049149}
+  _cubeExplosion: {fileID: 1968465535}
+  _cubeRaycaster: {fileID: 1961961937}
 --- !u!114 &1961961937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1191,8 +1192,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeRaycaster
   _terrainLayer: 10
-  _camera: {fileID: 330585545}
-  _input: {fileID: 1961961938}
+  _mainCamera: {fileID: 330585545}
+  _inputReader: {fileID: 1961961938}
 --- !u!114 &1961961938
 MonoBehaviour:
   m_ObjectHideFlags: 0
