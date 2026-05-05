@@ -12,9 +12,25 @@ public class Cube : MonoBehaviour
 
     [field: SerializeField] public int Generation { get; private set; }
 
-    public void Initialize(int generation)
+    public void Initialize(
+        int generation,
+        Vector3 scale,
+        Vector3 initialForce,
+        bool useGravity,
+        bool isRandomColor = true
+    )
     {
         Generation = generation;
+        transform.localScale = scale;
+
+        if (useGravity && _rigidbody)
+            _rigidbody.useGravity = true;
+
+        if (isRandomColor)
+            SetRandomColor();
+
+        if (initialForce != Vector3.zero)
+            AddInitialForce(initialForce);
     }
 
     public void SetScale(Vector3 scale)

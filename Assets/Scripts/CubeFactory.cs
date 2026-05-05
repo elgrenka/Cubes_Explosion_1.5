@@ -27,14 +27,11 @@ public class CubeFactory : MonoBehaviour
     {
         Vector3 spawnOffset = Random.insideUnitSphere * _spawnRadius;
         Vector3 spawnPosition = basePosition + spawnOffset;
+        Vector3 initialForce = Random.insideUnitSphere * _initialForce;
 
         Cube cube = Instantiate(_cubePrefab, spawnPosition, Quaternion.identity);
 
-        cube.Initialize(generation);
-        cube.SetScale(scale);
-        cube.SetRandomColor();
-        cube.EnableGravity();
-        cube.AddInitialForce(Random.insideUnitSphere * _initialForce);
+        cube.Initialize(generation, scale, initialForce, true, true);
 
         return cube;
     }
