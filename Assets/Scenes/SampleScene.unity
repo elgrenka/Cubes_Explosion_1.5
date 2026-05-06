@@ -1235,11 +1235,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e930b93a20c2f4d94f36d4ee06af0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeExplosion
-  _explosionForce: 50
-  _explosionRadius: 30
-  _upwardsModifier: 0
+  _splitExplosionForce: 100
+  _splitExplosionRadius: 50
+  _failBaseForce: 500
+  _failBaseRadius: 100
+  _failUpwardsModifier: 1
   _effect: {fileID: 4914716930404006884, guid: aed12c224fbc8704d8eaa07a52e88f44, type: 3}
   _effectDuration: 4
+  _affectedLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!4 &1968465536
 Transform:
   m_ObjectHideFlags: 0

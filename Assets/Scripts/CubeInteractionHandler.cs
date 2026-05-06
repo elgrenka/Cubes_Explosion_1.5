@@ -26,12 +26,12 @@ public class CubeInteractionHandler : MonoBehaviour
 
         int generation = clickedCube.Generation;
         bool shouldSplit = CalculateSplitChance(generation);
-
         Vector3 position = clickedCube.transform.position;
-        Vector3 scale = clickedCube.transform.localScale;
 
         if (shouldSplit)
         {
+            Vector3 scale = clickedCube.transform.localScale;
+
             List<Cube> spawnedCubes = _cubeFactory.SpawnSplitCubes(
                 position,
                 scale * 0.5f,
@@ -39,6 +39,10 @@ public class CubeInteractionHandler : MonoBehaviour
             );
 
             _cubeExplosion.ApplyExplosion(spawnedCubes, position);
+        }
+        else
+        {
+            _cubeExplosion.ExplodeFromCube(clickedCube);
         }
 
         Destroy(clickedCube.gameObject);

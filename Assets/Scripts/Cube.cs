@@ -12,11 +12,13 @@ public class Cube : MonoBehaviour
 
     [field: SerializeField] public int Generation { get; private set; }
 
+    public Rigidbody Rigidbody => _rigidbody;
+
     public void Initialize(
         int generation,
         Vector3 scale,
         Vector3 initialForce,
-        bool useGravity,
+        bool useGravity = true,
         bool isRandomColor = true
     )
     {
