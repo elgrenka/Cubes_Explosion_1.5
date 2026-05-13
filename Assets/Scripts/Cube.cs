@@ -7,26 +7,27 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rigidbody;
+    //[SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Renderer _renderer;
-
     [field: SerializeField] public int Generation { get; private set; }
+    [field: SerializeField] public Rigidbody Rigidbody;
 
-    public Rigidbody Rigidbody => _rigidbody;
+    //public Rigidbody Rigidbody => _rigidbody;
 
     public void Initialize(
         int generation,
         Vector3 scale,
         Vector3 initialForce,
-        bool useGravity = true,
+        bool isUseGravity = true,
         bool isRandomColor = true
     )
     {
         Generation = generation;
         transform.localScale = scale;
+        Rigidbody.useGravity = isUseGravity;
 
-        if (useGravity && _rigidbody)
-            _rigidbody.useGravity = true;
+        //if (useGravity && Rigidbody)
+        //    Rigidbody.useGravity = true;
 
         if (isRandomColor)
             SetRandomColor();
@@ -53,19 +54,19 @@ public class Cube : MonoBehaviour
 
     public void EnableGravity()
     {
-        if (_rigidbody is null)
+        if (Rigidbody is null)
             return;
 
-        _rigidbody.useGravity = true;
+        Rigidbody.useGravity = true;
     }
 
     public void AddInitialForce(Vector3 force)
     {
-        _rigidbody?.AddForce(force, ForceMode.Impulse);
+        Rigidbody?.AddForce(force, ForceMode.Impulse);
     }
 
     public void ApplyExplosionForce(float force, Vector3 center, float radius, float upwardsModifier)
     {
-        _rigidbody?.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
+        Rigidbody?.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
     }
 }

@@ -153,6 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd907b00c1199744a9ee113c88852c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cube
-  _rigidbody: {fileID: 6429829722473165643}
   _renderer: {fileID: 6910351415694020130}
   <Generation>k__BackingField: 0
+  Rigidbody: {fileID: 6429829722473165643}
