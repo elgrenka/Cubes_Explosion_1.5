@@ -36,7 +36,17 @@ public class CubeExplosion : MonoBehaviour
 
         foreach (Cube cube in cubes)
         {
-            cube?.ApplyExplosionForce(_splitExplosionForce, explosionCenter, _splitExplosionRadius, 0f);
+            if (cube?.Rigidbody != null)
+            {
+                cube.Rigidbody.AddExplosionForce(
+                    _splitExplosionForce,
+                    explosionCenter,
+                    _splitExplosionRadius,
+                    0f,
+                    ForceMode.Impulse
+                );
+
+            }
         }
     }
 

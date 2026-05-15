@@ -7,39 +7,33 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    //[SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Renderer _renderer;
-    [field: SerializeField] public int Generation { get; private set; }
-    [field: SerializeField] public Rigidbody Rigidbody;
-
-    //public Rigidbody Rigidbody => _rigidbody;
+    [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
+    [field: SerializeField] public float SplitChance { get; private set; }
 
     public void Initialize(
-        int generation,
         Vector3 scale,
-        Vector3 initialForce,
+        float splitChance,
+        //Vector3 initialForce,
         bool isUseGravity = true,
         bool isRandomColor = true
     )
     {
-        Generation = generation;
         transform.localScale = scale;
+        SplitChance = splitChance;
         Rigidbody.useGravity = isUseGravity;
-
-        //if (useGravity && Rigidbody)
-        //    Rigidbody.useGravity = true;
 
         if (isRandomColor)
             SetRandomColor();
 
-        if (initialForce != Vector3.zero)
-            AddInitialForce(initialForce);
+        //if (initialForce != Vector3.zero)
+        //    AddInitialForce(initialForce);
     }
 
-    public void SetScale(Vector3 scale)
-    {
-        transform.localScale = scale;
-    }
+    //public void SetScale(Vector3 scale)
+    //{
+    //    transform.localScale = scale;
+    //}
 
     public void SetRandomColor()
     {
@@ -52,21 +46,21 @@ public class Cube : MonoBehaviour
         };
     }
 
-    public void EnableGravity()
-    {
-        if (Rigidbody is null)
-            return;
+    //public void EnableGravity()
+    //{
+    //    if (Rigidbody is null)
+    //        return;
 
-        Rigidbody.useGravity = true;
-    }
+    //    Rigidbody.useGravity = true;
+    //}
 
-    public void AddInitialForce(Vector3 force)
-    {
-        Rigidbody?.AddForce(force, ForceMode.Impulse);
-    }
+    //public void AddInitialForce(Vector3 force)
+    //{
+    //    Rigidbody?.AddForce(force, ForceMode.Impulse);
+    //}
 
-    public void ApplyExplosionForce(float force, Vector3 center, float radius, float upwardsModifier)
-    {
-        Rigidbody?.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
-    }
+    //public void ApplyExplosionForce(float force, Vector3 center, float radius, float upwardsModifier)
+    //{
+    //    Rigidbody?.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
+    //}
 }

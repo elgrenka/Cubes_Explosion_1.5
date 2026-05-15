@@ -24,8 +24,8 @@ public class CubeInteractionHandler : MonoBehaviour
         if (clickedCube is null)
             return;
 
-        int generation = clickedCube.Generation;
-        bool shouldSplit = CalculateSplitChance(generation);
+        //int generation = clickedCube.Generation;
+        bool shouldSplit = Random.value <= clickedCube.SplitChance;
         Vector3 position = clickedCube.transform.position;
 
         if (shouldSplit)
@@ -35,7 +35,7 @@ public class CubeInteractionHandler : MonoBehaviour
             List<Cube> spawnedCubes = _cubeFactory.SpawnSplitCubes(
                 position,
                 scale * 0.5f,
-                generation + 1
+                clickedCube.SplitChance
             );
 
             _cubeExplosion.ApplyExplosion(spawnedCubes, position);
@@ -48,10 +48,10 @@ public class CubeInteractionHandler : MonoBehaviour
         Destroy(clickedCube.gameObject);
     }
 
-    private bool CalculateSplitChance(int generation)
-    {
-        float splitProbability = Mathf.Pow(0.5f, generation);
+    //private bool CalculateSplitChance(int generation)
+    //{
+    //    float splitProbability = Mathf.Pow(0.5f, generation);
 
-        return Random.value <= splitProbability;
-    }
+    //    return Random.value <= splitProbability;
+    //}
 }

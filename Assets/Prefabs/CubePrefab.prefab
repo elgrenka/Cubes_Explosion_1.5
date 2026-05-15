@@ -154,5 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cube
   _renderer: {fileID: 6910351415694020130}
-  <Generation>k__BackingField: 0
-  Rigidbody: {fileID: 6429829722473165643}
+  <Rigidbody>k__BackingField: {fileID: 6429829722473165643}
+  <SplitChance>k__BackingField: 1
