@@ -1241,8 +1241,8 @@ MonoBehaviour:
   _failBaseForce: 500
   _failBaseRadius: 100
   _failUpwardsModifier: 1
-  _successEffect: {fileID: 4914716930404006884, guid: aed12c224fbc8704d8eaa07a52e88f44, type: 3}
-  _failEffect: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  _successEffect: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  _failEffect: {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
   _effectDuration: 4
   _successSound: {fileID: 8300000, guid: 8524588a69a4f3e40bb597b6221138f1, type: 3}
   _failSound: {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
