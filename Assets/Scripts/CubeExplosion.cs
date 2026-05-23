@@ -13,8 +13,8 @@ public class CubeExplosion : MonoBehaviour
     [SerializeField] private float _failUpwardsModifier = 0f;
 
     [Header("Визуальные эффекты")]
-    [SerializeField] private GameObject _successEffect;
-    [SerializeField] private GameObject _failEffect;
+    [SerializeField] private ParticleSystem _successEffectPrefab;
+    [SerializeField] private ParticleSystem _failEffectPrefab;
     [SerializeField] private float _effectDuration = 4f;
 
     [Header("Звуковые эффекты")]
@@ -26,9 +26,12 @@ public class CubeExplosion : MonoBehaviour
     [Header("Общие настройки")]
     [SerializeField] private LayerMask _affectedLayers = -1;
 
+    private const float MinCubeScale = 0.1f;
+    private const float UpwardsModifier = 0f;
+
     public void ApplyExplosion(List<Cube> cubes, Vector3 explosionCenter)
     {
-        PlayExplosionEffect(_successEffect, explosionCenter);
+        PlayExplosionEffect(_successEffectPrefab, explosionCenter);
         PlayExplosionSound(_successSound);
 
         if (cubes == null)
@@ -42,7 +45,7 @@ public class CubeExplosion : MonoBehaviour
                     _splitExplosionForce,
                     explosionCenter,
                     _splitExplosionRadius,
-                    0f,
+                    UpwardsModifier,
                     ForceMode.Impulse
                 );
 
@@ -56,34 +59,34 @@ public class CubeExplosion : MonoBehaviour
             return;
 
         Vector3 center = sourceCube.transform.position;
-        float cubeScale = Mathf.Max(sourceCube.transform.localScale.x, 0.1f);
+        float cubeScale = Mathf.Max(sourceCube.transform.localScale.x, MinCubeScale);
         float force = _failBaseForce / cubeScale;
         float radius = _failBaseRadius / cubeScale;
 
-        PlayExplosionEffect(_failEffect, center);
+        PlayExplosionEffect(_failEffectPrefab, center);
         PlayExplosionSound(_failSound);
 
         Collider[] hitColliders = Physics.OverlapSphere(center, radius, _affectedLayers);
 
         foreach (Collider collider in hitColliders)
         {
-            Rigidbody rb = collider.attachedRigidbody;
+            Rigidbody hitRigidbody = collider.attachedRigidbody;
 
-            if (rb != null && rb != sourceCube.Rigidbody)
+            if (hitRigidbody != null && hitRigidbody != sourceCube.Rigidbody)
             {
-                rb.AddExplosionForce(force, center, radius, _failUpwardsModifier, ForceMode.Impulse);
+                hitRigidbody.AddExplosionForce(force, center, radius, _failUpwardsModifier, ForceMode.Impulse);
             }
         }
     }
 
-    private void PlayExplosionEffect(GameObject effectPrefab, Vector3 position)
+    private void PlayExplosionEffect(ParticleSystem effectPrefab, Vector3 position)
     {
         if (effectPrefab is null)
             return;
 
-        GameObject effect = Instantiate(effectPrefab, position, Quaternion.identity);
+        ParticleSystem effect = Instantiate(effectPrefab, position, Quaternion.identity);
 
-        Destroy(effect, _effectDuration);
+        Destroy(effect.gameObject, _effectDuration);
     }
 
     private void PlayExplosionSound(AudioClip clip)

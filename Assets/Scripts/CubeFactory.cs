@@ -10,10 +10,12 @@ public class CubeFactory : MonoBehaviour
     [SerializeField] private float _spawnRadius = 3f;
     [SerializeField] private float _initialForce = 5f;
 
+    private const float ChildScaleMultiplier = 0.5f;
+
     public List<Cube> SpawnSplitCubes(Vector3 position, Vector3 scale, float parentSplitChance)
     {
         int count = Random.Range(_minSpawnCount, _maxSpawnCount + 1);
-        float childSplitChance = parentSplitChance * 0.5f;
+        float childSplitChance = parentSplitChance * ChildScaleMultiplier;
 
         List<Cube> cubes = new List<Cube>(count);
 

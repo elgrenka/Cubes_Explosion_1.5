@@ -7,6 +7,8 @@ public class CubeInteractionHandler : MonoBehaviour
     [SerializeField] private CubeExplosion _cubeExplosion;
     [SerializeField] private CubeRaycaster _cubeRaycaster;
 
+    private const float ChildSplitChanceMultiplier = 0.5f;
+
     private void OnEnable()
     {
         if (_cubeRaycaster is not null)
@@ -24,7 +26,6 @@ public class CubeInteractionHandler : MonoBehaviour
         if (clickedCube is null)
             return;
 
-        //int generation = clickedCube.Generation;
         bool shouldSplit = Random.value <= clickedCube.SplitChance;
         Vector3 position = clickedCube.transform.position;
 
@@ -34,7 +35,7 @@ public class CubeInteractionHandler : MonoBehaviour
 
             List<Cube> spawnedCubes = _cubeFactory.SpawnSplitCubes(
                 position,
-                scale * 0.5f,
+                scale * ChildSplitChanceMultiplier,
                 clickedCube.SplitChance
             );
 
@@ -47,11 +48,4 @@ public class CubeInteractionHandler : MonoBehaviour
 
         Destroy(clickedCube.gameObject);
     }
-
-    //private bool CalculateSplitChance(int generation)
-    //{
-    //    float splitProbability = Mathf.Pow(0.5f, generation);
-
-    //    return Random.value <= splitProbability;
-    //}
 }

@@ -28,15 +28,10 @@ public class CubeRaycaster : MonoBehaviour
 
         Ray ray = _mainCamera.ScreenPointToRay(mousePosition);
 
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
-
         if (Physics.Raycast(ray, out RaycastHit hit) == false)
             return;
 
         GameObject hitObject = hit.collider.gameObject;
-
-        if (hitObject.layer == _terrainLayer)
-            return;
 
         if (hitObject.TryGetComponent(out Cube cube) == false)
             return;

@@ -14,7 +14,6 @@ public class Cube : MonoBehaviour
     public void Initialize(
         Vector3 scale,
         float splitChance,
-        //Vector3 initialForce,
         bool isUseGravity = true,
         bool isRandomColor = true
     )
@@ -25,15 +24,7 @@ public class Cube : MonoBehaviour
 
         if (isRandomColor)
             SetRandomColor();
-
-        //if (initialForce != Vector3.zero)
-        //    AddInitialForce(initialForce);
     }
-
-    //public void SetScale(Vector3 scale)
-    //{
-    //    transform.localScale = scale;
-    //}
 
     public void SetRandomColor()
     {
@@ -45,22 +36,4 @@ public class Cube : MonoBehaviour
             color = Random.ColorHSV()
         };
     }
-
-    //public void EnableGravity()
-    //{
-    //    if (Rigidbody is null)
-    //        return;
-
-    //    Rigidbody.useGravity = true;
-    //}
-
-    //public void AddInitialForce(Vector3 force)
-    //{
-    //    Rigidbody?.AddForce(force, ForceMode.Impulse);
-    //}
-
-    //public void ApplyExplosionForce(float force, Vector3 center, float radius, float upwardsModifier)
-    //{
-    //    Rigidbody?.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
-    //}
 }
